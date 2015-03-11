@@ -1,0 +1,307 @@
+body {
+  /*overflow: hidden;*/
+  margin: 0;
+  font-size: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  color: #292929;
+}
+
+a {
+	text-decoration: none;
+	color: #292929;
+}
+
+#credits {
+	position: absolute;
+	left: 760px;
+	top: 710px;
+	z-index: 100;
+}
+
+.creditText {
+	text-align: right;
+	font-size: 9px;
+	font-weight: 300;
+}
+
+#titleAll {
+  font-family: Oswald;
+  font-size: 24px;
+  font-weight: 300;
+  padding: 10px 0px 0px 20px;
+  /*text-transform: uppercase;*/
+}
+
+#rule{
+  height:1px;
+  background:#ddd;
+  width:700px;
+}
+
+#callOut {
+	position: absolute;
+	left: 30px;
+	top: 570px;
+	width: 310px;
+	height: 100px;
+	font-size: 11px;
+	visibility: hidden;
+}
+
+.callOutTitle {
+	font-family: Oswald;
+	font-size: 18px;
+	font-weight: 300;
+	padding-bottom: 2px;
+}
+
+#callOutrule{
+  height:1px;
+  background: #B3B3B3;
+  width:225px;
+  margin-bottom: 6px;
+}
+
+table.fixed { table-layout:fixed; width:310px;}
+table.fixed td { overflow: hidden; }
+
+#callOutCountryWrapper {
+	position: absolute;
+	left: 200px;
+	top: 250px;
+	width: 300px;
+	height: 50px;
+	visibility: hidden;
+}
+
+#explanation {
+	font-size: 18px;
+	top: 200px;
+	left: 50px;
+	width: 550px;
+	line-height: 150%;
+}
+
+#explanationIntro {
+	font-size: 12px;
+	top: 475px;
+	left: 50px;
+	width: 550px;
+	line-height: 180%;
+	color: #5E5E5E;
+}
+
+.expl-text {
+	position: absolute;
+	text-align: center;
+}
+
+#section {
+  position: absolute;
+  top: 60px;
+  left: 650px;	
+  width: 320px;
+  visiblity: hidden;
+}
+
+#sectionTitle {
+  font-family: Oswald;
+  font-size: 18px;
+  font-weight: 300;	
+  padding-bottom: 7px;
+}
+
+#sectionText {
+	color: #6B6B6B;
+	text-align: justify;
+	line-height: 150%;
+}
+
+#clickerWrapper {
+  z-index: 10;
+  display: block;
+  position: absolute;
+  width: 1000px;
+  top: 680px;
+  visibility: auto;
+}
+
+#progressButtonWrapper{
+	text-align: center;
+	position: relative;
+	width: 400px;
+	height: 30px;
+	margin: 0 auto;
+}
+
+#progress {
+  z-index: 1;
+  display: block;
+  position: relative;
+  width: 40%;
+  height: 6px;
+  margin: 0px auto;
+  padding-bottom: 30px;
+  visibility: hidden;
+}
+		
+.progressButton {
+  display: block;
+  font-family: Oswald;
+  font-size: 20px;
+  font-weight: 300;
+  position: relative;
+  /*width: 80px;*/
+  text-align: center;
+  width: 20%;
+  margin: 0 auto;
+  border: 1px solid;
+  cursor: pointer;
+  display:inline-block;
+}
+
+.activeButton {
+  color: #363636;
+  border-color: #363636;
+  cursor: pointer;
+}
+
+.inactiveButton {
+  color: #D3D3D3;
+  border-color: #D3D3D3;
+  cursor: default;
+  pointer-events: none;
+}
+
+.space{
+	position: relative;
+	width:  2%;
+	height: 10px;
+	display:inline-block;
+	cursor: default;
+}	
+
+.circleBase {
+	position: relative;
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+    width: 10px;
+    height: 10px;
+    border: 1px solid #D3D3D3;
+	top: -5px;
+	display:inline-block;
+    background: white;
+}
+
+#viewOuterWrapper {
+  top: 0;
+  display: block;
+  position: absolute;
+  width: 300px;
+  top: 742px;
+  left: 25px;
+}
+
+.view {
+  font-size: 12px;
+  width: 12%;
+}
+
+.activeButtonView {
+  color: #5E5E5E;
+  border-color: #7F7F7F;
+  cursor: pointer;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.stepLine {
+	stroke-width: 1;
+	stroke: #AAAAAA;
+}
+
+.stepText {
+	color: #AAAAAA;
+}
+
+.stepRect {
+	fill: white;
+	opacity: 0;
+}
+
+.geo-path {
+	stroke:  white;
+	stroke-width: 1.5px;
+	stroke-opacity: 1;
+	fill: #E5D9C9;
+	fill-opacity: 1;
+}
+
+.city_2000 {
+	fill: #858483;
+	color: #858483;
+	opacity: 1;
+}
+
+.city_2010 {
+	fill: #DA6761;
+	color: #DA6761;
+	opacity: 1;
+}
+
+.titleTop {
+	font-family: Oswald;
+	font-size: 16px;
+	font-weight: 300;
+	fill: #525252;
+}
+
+.title {
+	font-size: 12px;
+	fill: #A6A6A6;
+}
+
+.barTitle {
+	font-size: 14px;
+}
+
+.subTitle {
+	text-anchor: middle;
+	font-size: 10px;
+	fill: #A3A3A3;
+	font-weight: 300;
+}
+
+text {
+	cursor: default;
+	fill: #525252;
+}
+
+.btn-group {
+	position: relative;
+	top: 400px;
+	left: 40px;
+	visibility: hidden;
+}
+
+.btn {
+	font-size: 10px;
+	border-radius:0;
+	padding: 3px 7px;
+	line-height: 1.5;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;	
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #8C8C8C;
+  shape-rendering: crispEdges;
+}
+.axis text {
+	font-size: 8px;
+}

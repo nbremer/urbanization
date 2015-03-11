@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Urbanization in East Asia</title>
+	
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/topojson.v0.min.js"></script>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	
+    <link href='css/style.css' rel='stylesheet' type='text/css'>
+	
+  </head>
+  <body>
+
+	<!-- Title in top left corner -->
+	<div id="titleAll">
+		<span>Urbanization in East Asia between </span><span style="color: #858483;">2000</span><span> and </span><span style="color: #DA6761;">2010</span>
+		<div id="rule"></div>
+	</div>
+	
+	<!-- The bigger text boxes that appear during the story -->
+	<div id="explanation" class="expl-text"></div>
+	<div id="explanationIntro" class="expl-text"></div>
+
+	<!-- all chart SVGs -->
+	<div id="chart"></div>
+
+
+	
+	<!-- Section on the right of the screen -->
+	<div id="section">
+		<div id="sectionTitle"></div>
+		<div id="sectionText"></div>
+		<div class="btn-group" data-toggle="buttons">
+			<label id="popButton" class="btn btn-default active"><input type="radio" class="btn-options"> Population </label>
+			<label id="landButton" class="btn btn-default"><input type="radio" class="btn-options"> Urban Land </label>
+			<label id="densButton" class="btn btn-default"><input type="radio" class="btn-options"> Population Density </label>
+		</div>
+	</div>
+	
+	<!-- The callout that belongs to the map view in the bottom left corner -->
+	<div id="callOut">
+		<div id="callOutCity" class="callOutTitle"></div>
+		<div id="callOutrule"></div>
+		
+		<table class="fixed">
+			<colgroup>
+			   <col span="1" style="width: 20%;">
+			   <col span="1" style="width: 21%;">
+			   <col span="1" style="width: 22%;">
+			   <col span="1" style="width: 37%;">
+			</colgroup>
+	
+		  <tr>
+			<th class="th" style="padding-bottom: 4px; padding-right: 7px;"></th>
+			<th class="th" style="padding-bottom: 4px; padding-right: 7px; border-bottom: 1px solid #D1D1D1;">Urban Pop.<br>[million]</th>
+			<th class="th" style="padding-bottom: 4px; padding-right: 7px; border-bottom: 1px solid #D1D1D1;">Urban Land<br>[sq. km]</th>
+			<th class="th" style="padding-bottom: 4px; padding-right: 7px; border-bottom: 1px solid #D1D1D1;">Urban Pop. Density<br>[people/sq. km]</th>
+		  </tr>
+		  <tr>
+			<td id="td-2000" style="padding-top: 3px; padding-right: 7px;"><span style="color: #858483; font-size:12px;">2000</span></td>
+			<td id="td-pop-2000" style="padding-top: 3px; padding-right: 7px;">0</td>
+			<td id="td-land-2000" style="padding-top: 3px; padding-right: 7px;">0</td>
+			<td id="td-density-2000" style="padding-top: 3px; padding-right: 7px;">0</td>
+		  </tr>
+		  <tr>
+			<td id="td-2010" style="padding-bottom: 2px; padding-top: 2px; padding-right: 7px; border-bottom: 1px solid #D1D1D1;"><span style="color: #DA6761; font-size:12px;">2010</span> <span style="font-size:9px;">(rank)</span></td>
+			<td id="td-pop-2010" style="padding-bottom: 2px; padding-top: 2px; padding-right: 7px; border-bottom: 1px solid #D1D1D1;">0</td>
+			<td id="td-land-2010" style="padding-bottom: 2px; padding-top: 2px; padding-right: 7px; border-bottom: 1px solid #D1D1D1;">0</td>
+			<td id="td-density-2010" style="padding-bottom: 2px; padding-top: 2px; padding-right: 7px; border-bottom: 1px solid #D1D1D1;">0</td>
+		  </tr>
+		  <tr>
+			<td id="td-perc" style="padding-top: 2px; padding-right: 7px; font-size:10px;">Growth %</td>
+			<td id="td-pop-perc" style="padding-top: 2px; padding-right: 7px; font-size:10px;">0%</td>
+			<td id="td-land-perc" style="padding-top: 2px; padding-right: 7px; font-size:10px;">0%</td>
+			<td id="td-density-perc" style="padding-top: 2px; padding-right: 7px; font-size:10px;">0%</td>
+		  </tr>
+		</table>		
+	
+	</div>
+	
+	<!-- Small hover effect in last scatter plot view -->
+	<div id="callOutCountryWrapper">
+		<div id="callOutCountry" class="callOutTitle">Tokyo</div>	
+	</div>
+	
+	<!-- Buttons at the bottom -->
+	<div id="clickerWrapper">
+		<div id="progress"></div>
+		<div id="progressButtonWrapper">
+			<div id="clickerBack" class="progressButton inactiveButton">Back</div>
+			<div class="space"> </div><div class="space"> </div>
+			<div id="circle_1" class="circleBase"></div><div class="space"> </div>
+			<div id="circle_2" class="circleBase mapView clickable"></div><div class="space"> </div>
+			<div id="circle_3" class="circleBase"></div><div class="space"> </div>
+			<div id="circle_4" class="circleBase slopeView clickable"></div><div class="space"> </div>
+			<div id="circle_5" class="circleBase"></div><div class="space"> </div>
+			<div id="circle_6" class="circleBase histoView clickable"></div><div class="space"> </div>
+			<div id="circle_7" class="circleBase"></div><div class="space"> </div>
+			<div id="circle_8" class="circleBase scatterView clickable"></div><div class="space"> </div>
+			<div id="circle_9" class="circleBase"></div><div class="space"> </div>
+			<div class="space"> </div>
+			<div id="clickerFront" class="progressButton activeButton">Continue</div>
+		</div>
+	</div>
+	
+	<!-- View buttons at the left -->
+	<!--
+	<div id="viewOuterWrapper">
+		<div class="viewInnerWrapper">
+			<div id="viewMap" class="progressButton view activeButtonView">map</div>
+			<div class="space"> </div>
+			<div id="viewSlope" class="progressButton view activeButtonView">slope</div>
+			<div class="space"> </div>
+			<div id="viewHisto" class="progressButton view activeButtonView">histo</div>
+			<div class="space"> </div>
+			<div id="viewScatter" class="progressButton view activeButtonView">scatter</div>
+		</div>
+	</div>
+	-->
+	
+	<div id="credits">
+		<div class="creditText">Visuals | Nadieh Bremer | <a href="http://www.visualcinnamon.com" target="_blank">VisualCinnamon.com</a></div>	
+		<div class="creditText">Text | Nadieh Bremer & Marlieke Ranzijn</div>
+		<div class="creditText">Inspiration | <a href="http://www.worldbank.org/en/topic/urbandevelopment/publication/east-asias-changing-urban-landscape-measuring-a-decade-of-spatial-growth" target="_blank">World Bank report</a></div>	
+		<div class="creditText">Data | <a href="http://puma.worldbank.org/downloads" target="_blank">World Bank open & PUMA datasets</a></div>		
+	</div>
+	
+	<!-- Load all required scripts -->
+	<script src="js/underscore.js"></script>
+	<!-- Load the data on cities -->
+	<script src="js/urban_areas.js"></script>
+	<!-- Load the data on countries -->
+	<script src="js/countries.js"></script>
+	<!-- Small function used throughout the scripts -->
+	<script src="js/helperFunctions.js"></script>
+	<script src="js/setStepper.js"></script>
+	<!-- Bar chart created in several views to the right -->
+	<script src="js/barChart.js"></script>
+	<!-- Starting screen -->
+	<script src="js/introText.js"></script>
+	<!-- Introduction with the two bars -->
+	<script src="js/startBar.js"></script>
+	<!-- Introduction to the map view with cities -->
+	<script src="js/introduceCities.js"></script>
+	<!-- Map view with cities -->
+	<script src="js/totalAreaMap.js"></script>
+	<!-- Introduction to the slope graph -->
+	<script src="js/introSlope.js"></script>
+	<!-- Slope graph with absolute numbers -->
+	<script src="js/slopeGraph.js"></script>
+	<!-- Introduction to the dot histogram -->
+	<script src="js/introDotHistogram.js"></script>
+	<!-- Dot histogram showing growth %-->
+	<script src="js/dotHistogram.js"></script>
+	<!-- Introduction to the country scatter plot -->
+	<script src="js/introUrbanScatter.js"></script>
+	<!-- The country scatterplot of GDP versus Urban pop % -->
+	<script src="js/urbanPopDot.js"></script>
+	<!-- Close with the final text -->
+	<script src="js/finalText.js"></script>
+
+	<!-- Initiate the SVG and different g elements-->
+    <script type="text/javascript">
+		var width = 1000,
+			height = 710;
+				
+		var svg = d3.select("#chart").append("svg")
+				.attr("width", width)
+				.attr("height", height);
+				
+		var modus = "Map", 	//first modus is the map view (+bar chart)
+			counter = 0;	//counter is initialized
+			
+		var numFormatThree = d3.format(".3f"),
+			numFormatTwo = d3.format(".2f"),
+			numFormatOne = d3.format(".1f"),
+			numFormatSI = d3.format(".2s"),
+			numFormatPercent = d3.format(".0%"),
+			numFormatCurrency = d3.format("$,");
+
+		
+		var map = svg.append("g");
+		var cities2010 = svg.append("g");
+		var cities2000 = svg.append("g");
+
+		var startBarChart = svg.append("g");
+
+		var barChart = svg.append("g").attr("class", "barWrappingOuter");
+		var barWrappingOther = svg.append("g").attr("class", "barWrappingOther");
+		
+		var slopeGraph = svg.append("g").attr("class","slopeGraph");
+		var slopes = slopeGraph.append("g"),
+			text2000 = slopeGraph.append("g"),
+			text2010 = slopeGraph.append("g"),
+			slopeTitles = slopeGraph.append("g");
+			
+		var dotWrapper = svg.append("g");
+
+		////////////////////////////////////////////////////////////	
+		//////////////// Initiate Progress Bar /////////////////////
+		////////////////////////////////////////////////////////////
+		/*Initiate variables for bar*/
+		var progressColor = ["#D1D1D1","#949494"],
+			progressClass = ["prgsBehind","prgsFront"],
+			prgsWidth = 0.4*1000,
+			prgsHeight = 3;
+		/*Create SVG to visualize bar in*/
+		var progressBar = d3.select("#progress").append("svg")
+			.attr("width", prgsWidth)
+			.attr("height", 3*prgsHeight);
+		/*Create two bars of which one has a width of zero*/
+		progressBar.selectAll("rect")
+			.data([prgsWidth, 0])
+			.enter()
+			.append("rect")
+			.attr("class", function(d,i) {return progressClass[i];})
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("width", function (d) {return d;})
+			.attr("height", prgsHeight)
+			.attr("fill", function(d,i) {return progressColor[i];});
+
+		////////////////////////////////////////////////////////////	
+		///////////////////// Initiate Map /////////////////////////
+		////////////////////////////////////////////////////////////
+		//Variables for the map
+		var projection = d3.geo.mercator()
+				.scale(410)
+				.translate([-510,475]);
+		  
+		var path = d3.geo.path()
+				.projection(projection);
+				
+		//Read in the Asian countries polygons and initiate the plot
+		d3.json("js/asian_countries.json", function(topology) {	
+			map.selectAll('.geo-path')
+				.data(topology.features)
+				.enter().append('path')
+					.attr('class', 'geo-path')
+					.attr('d', path)
+					.attr("visibility", "visible")
+					.style("stroke-opacity", 1)
+					.style("fill-opacity", 0.5);	
+		});	
+
+		////////////////////////////////////////////////////////////	
+		/////////////////// Initiate Cities ////////////////////////
+		////////////////////////////////////////////////////////////
+		//Initiate the 2010 cities as circles
+		cities2010.selectAll(".city_2010")
+			.data(data)
+			.enter().append("circle")
+				.attr("class", "city_2010")
+				.attr('id', function(d){ return "id_2010_" + d.rank_pop; })
+				.style("fill-opacity", 0)
+				.attr("r", 0)
+				.attr("cx", function(d) {return projection([d.longitude, d.latitude])[0];})
+				.attr("cy", function(d) {return projection([d.longitude, d.latitude])[1];});
+		
+		//Initiate the 2000 cities as circles
+		cities2000.selectAll(".city_2000")
+			.data(data)
+			.enter().append("circle")
+				.attr("class", "city_2000")
+				.attr('id', function(d){ return "id_2000_" + d.rank_pop; })
+				.style("fill-opacity", 0)
+				.attr("r", 0)
+				.attr("cx", function(d) {return projection([d.longitude, d.latitude])[0];})
+				.attr("cy", function(d) {return projection([d.longitude, d.latitude])[1];});
+		
+	
+		////////////////////////////////////////////////////////////	
+		/////////////////// Initiate Buttons ///////////////////////
+		////////////////////////////////////////////////////////////
+			
+		//Order of steps / views
+		function order() {
+			//Hack to remove all setTimeouts still in play
+			var highestTimeoutId = setTimeout(";");
+			for (var i = 0 ; i < highestTimeoutId ; i++) {
+				clearTimeout(i); 
+			}//for
+
+			//Back to beginning
+			if(counter == 0) { introText(); }
+			//Start bars & introduce cities
+			if(counter == 1) { startBar(); }
+			//Intermediate view of Map
+			if(counter == 2) { totalAreaMap(); }
+			//Slopegraph intro
+			if(counter == 3) { introSlope(); }
+			//Slopegraph view
+			if(counter == 4) { 
+				rVar = "density"; 
+				d3.select("#popButton").classed("active",false);
+				d3.select("#landButton").classed("active",false);				
+				d3.select("#densButton").classed("active",true);
+				callSlopeGraph(); }	
+			//Dot plot histogram intro
+			if(counter == 5) { introDotHistogram(); }	
+			//Dot plot histogram view
+			if(counter == 6) { callDotHistogram(); }	
+			//Country scatter intro
+			if(counter == 7) { introUrbanScatter(); }	
+			//Country scatter
+			if(counter == 8) { callScatter(); }	
+			//Finishing text
+			if(counter == 9) { finalText(); }	
+		}//order
+		
+		//Order of steps when clicking the front button
+		d3.select("#clickerFront")      
+			.on("click", function(e){
+				order();		
+			});
+		//Order of steps when clicking the back button
+		d3.select("#clickerBack")      
+			.on("click", function(e){
+				counter = counter - 2;
+				if (counter < 0) counter = 0;
+				order();
+			});	
+
+		//Go straight to map view
+		d3.select("#circle_2")      
+			.on("click", function(e){
+				counter = 2;
+				order();		
+			});
+
+		//Go straight to slopegraph view
+		d3.select("#circle_4")    
+			.on("click", function(e){
+				counter = 4;
+				order();		
+			});
+
+		//Go straight to dot histogram view
+		d3.select("#circle_6")      
+			.on("click", function(e){
+				counter = 6;
+				order();		
+			});
+			
+		//Go straight to dot histogram view
+		d3.select("#circle_8")     
+			.on("click", function(e){
+				counter = 8;
+				order();		
+			});
+		
+		//////////////// Buttons in lower right section ///////////////
+		
+		//When you click the population button
+		d3.select("#popButton") 
+			.on("click", function(e){
+			
+				rVar = "pop";
+				totalPopulationBarGraph();
+					
+				if (modus == "Map") {totalPopulationMap();};
+				if (modus == "Slope") {totalPopulationSlopeGraph();};	
+				if (modus == "Dot") {totalPopulationDotHisto();};
+				
+		});
+		//When you click the urban land button
+		d3.select("#landButton")      
+			.on("click", function(e){	
+				
+				rVar = "land";
+				totalLandBarGraph();
+				
+				if (modus == "Map") {totalUrbanLandMap();};
+				if (modus == "Slope") {totalUrbanLandSlopeGraph();};	
+				if (modus == "Dot") {totalLandDotHisto();};
+		});
+		//When you click the population density button
+		d3.select("#densButton")      
+			.on("click", function(e){
+			
+				rVar = "density";
+				totalDensityBarGraph();
+				
+				if (modus == "Map") {totalDensityMap();};
+				if (modus == "Slope") {totalDensitySlopeGraph();};	
+				if (modus == "Dot") {totalDensityDotHisto();};
+		});
+
+		//Start
+		introText();
+		setTimeout(setStepper,300);
+    </script>
+	
+
+  </body>
+</html>

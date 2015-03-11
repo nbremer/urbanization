@@ -2,6 +2,11 @@
 /////////////////////////// Helper Functions //////////////////////////////
 ///////////////////////////////////////////////////////////////////////////	
 
+window.onerror = function() {
+    location.reload();
+}
+
+
 //Change the explanation text
 function explanationText(varText, delay, delayStep) {
 	d3.select("#explanation")

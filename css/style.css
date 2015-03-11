@@ -9,13 +9,13 @@ body {
 
 a {
 	text-decoration: none;
-	color: #292929;
+	color: #6B6B6B;
 }
 
 #credits {
 	position: absolute;
 	left: 760px;
-	top: 710px;
+	top: 700px;
 	z-index: 100;
 }
 
@@ -23,6 +23,7 @@ a {
 	text-align: right;
 	font-size: 9px;
 	font-weight: 300;
+	color: #6B6B6B;
 }
 
 #titleAll {

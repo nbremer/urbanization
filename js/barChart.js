@@ -77,13 +77,15 @@ function initiateBarChart() {
 	//Create the 2010 reddish bars	
 	bar.append("rect")
 		.attr("class","city_2010")
+		.style("fill","#DA6761")
 		.style("fill-opacity", 0.8)
 		.attr("width", 0)
 		.attr("height", barHeight - 2);
 	
-	//Create the 2010 grey bars	
+	//Create the 2000 grey bars	
 	bar.append("rect")
 		.attr("class","city_2000")
+		.style("fill","#858483")
 		.style("opacity", 0.8)
 		.attr("width", 0)
 		.attr("height", barHeight - 2);
@@ -94,8 +96,12 @@ function initiateBarChart() {
 		.attr("x", -10)
 		.attr("y", 11)
 		.style("text-anchor", "end")
+		.style("font-size", 10)
+		.style("font-weight", 300)
+		.style("fill","#292929")
+		.style("font-family", "'Open Sans', sans-serif")
 		.text(function(d) { return d.country; });
-
+	
 	//Append the x-axis
 	barWrappingOther.append("g")
 		.attr("class", "x axis")

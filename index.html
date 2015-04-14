@@ -263,6 +263,7 @@
 				.attr("class", "city_2010")
 				.attr('id', function(d){ return "id_2010_" + d.rank_pop; })
 				.style("fill-opacity", 0)
+				.style("fill","#DA6761")
 				.attr("r", 0)
 				.attr("cx", function(d) {return projection([d.longitude, d.latitude])[0];})
 				.attr("cy", function(d) {return projection([d.longitude, d.latitude])[1];});
@@ -274,6 +275,7 @@
 				.attr("class", "city_2000")
 				.attr('id', function(d){ return "id_2000_" + d.rank_pop; })
 				.style("fill-opacity", 0)
+				.style("fill","#858483")
 				.attr("r", 0)
 				.attr("cx", function(d) {return projection([d.longitude, d.latitude])[0];})
 				.attr("cy", function(d) {return projection([d.longitude, d.latitude])[1];});

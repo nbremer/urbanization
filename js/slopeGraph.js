@@ -101,7 +101,7 @@ function callSlopeGraph() {
 	
 	//Remove color setting from dot-plot
 	cities2010.selectAll(".city_2010")
-		.style("fill", null)
+		.style("fill","#DA6761")
 		.style("fill-opacity", 0.8);
 		
 	//Remove dot histogram axis
@@ -271,7 +271,7 @@ function changeSlope() {
 	//Move city circles of 2010 to right axis
 	cities2010.selectAll(".city_2010")
 		.transition().duration(dur)
-		.style("fill", null)
+		.style("fill","#DA6761")
 		.style("fill-opacity", 0.8)
 		.attr("r", 3)
 		.attr("cx", xAxisLoc2010)

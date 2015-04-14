@@ -55,7 +55,7 @@ function totalAreaMap() {
 
 	//Remove color setting from dot-plot
 	cities2010.selectAll(".city_2010")
-		.style("fill", null);
+		.style("fill","#DA6761");
 		
 	//Remove dot histogram axis & text - if present
 	dotWrapper.selectAll("g").remove();
